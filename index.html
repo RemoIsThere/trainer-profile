@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rehmat - Technical Trainer Portfolio</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg-primary: linear-gradient(135deg, #ff4500 0%, #6c3483 100%);
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #fff5f0;
+        --text-primary: #333;
+        --text-secondary: #666;
+        --text-light: #ffffff;
+        --card-bg: #ffffff;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --shadow-strong: rgba(0, 0, 0, 0.2);
+        --accent-1: #ff4500;
+        --accent-2: #6c3483;
+        --nav-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      [data-theme="dark"] {
+        --bg-secondary: #1a1a2e;
+        --bg-tertiary: #16213e;
+        --text-primary: #e4e4e4;
+        --text-secondary: #b8b8b8;
+        --card-bg: #0f3460;
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(26, 26, 46, 0.95);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--nav-bg);
+        backdrop-filter: blur(10px);
+        padding: 1rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0 4px 20px var(--shadow);
+        transition: all 0.3s;
+      }
+
+      nav .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: var(--bg-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: var(--text-primary);
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-1);
+        transition: width 0.3s;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      nav a:hover {
+        color: var(--accent-1);
+      }
+
+      /* Theme Toggle */
+      .theme-toggle {
+        background: var(--card-bg);
+        border: 2px solid var(--accent-1);
+        border-radius: 50px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s;
+        font-size: 1.2rem;
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px var(--shadow);
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6rem 5% 4rem;
+        perspective: 1000px;
+        background: var(--bg-primary);
+      }
+
+      .hero-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        max-width: 1200px;
+        width: 100%;
+        align-items: center;
+      }
+
+      .hero-image {
+        position: relative;
+        transform-style: preserve-3d;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .image-placeholder {
+        width: 100%;
+        max-width: 400px;
+        height: 500px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.2),
+          rgba(255, 255, 255, 0.1)
+        );
+        border-radius: 20px;
+        border: 2px dashed rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: white;
+        text-align: center;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+          0 0 40px rgba(255, 255, 255, 0.1) inset;
+        transform: translateZ(50px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .image-placeholder::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        animation: shimmer 3s infinite;
+      }
+
+      .image-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 18px;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotateY(-5deg);
+        }
+        50% {
+          transform: translateY(-20px) rotateY(5deg);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%) translateY(-100%);
+        }
+        100% {
+          transform: translateX(100%) translateY(100%);
+        }
+      }
+
+      .hero-content {
+        color: white;
+        transform: translateZ(30px);
+      }
+
+      .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-location {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .hero-content h2 {
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        opacity: 0.85;
+      }
+
+      .stats-row {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-box {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        display: block;
+        animation: countUp 2s ease-out;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      @keyframes countUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 1rem 2.5rem;
+        background: white;
+        color: var(--accent-1);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s;
+        transform: translateZ(20px);
+      }
+
+      .cta-button:hover {
+        transform: translateZ(20px) translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .cta-button.secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      /* Sections */
+      section {
+        padding: 5rem 5%;
+        background: var(--bg-secondary);
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+      }
+
+      section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        background: var(--bg-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: var(--bg-primary);
+        border-radius: 2px;
+      }
+
+      /* Skills Section */
+      .skills-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .skills-category {
+        margin-bottom: 3rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+        color: var(--accent-1);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .skill-card {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px var(--shadow);
+        transition: all 0.3s;
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: var(--accent-1);
+        box-shadow: 0 15px 40px var(--shadow-strong);
+      }
+
+      .skill-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+      }
+
+      .skill-card p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      /* Certifications */
+      #certifications {
+        background: var(--bg-tertiary);
+      }
+
+      .cert-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .cert-card {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px var(--shadow);
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cert-card::before {
+        content: "🏆";
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        font-size: 5rem;
+        opacity: 0.1;
+      }
+
+      .cert-card:hover {
+        transform: translateY(-5px) rotateZ(1deg);
+        box-shadow: 0 15px 40px var(--shadow-strong);
+      }
+
+      .cert-card h3 {
+        color: var(--accent-1);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .cert-issuer {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      /* Experience Section */
+      .experience-card {
+        background: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 20px var(--shadow);
+        border-left: 4px solid var(--accent-1);
+        transition: all 0.3s;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2rem;
+      }
+
+      .experience-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 10px 30px var(--shadow-strong);
+      }
+
+      .experience-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .experience-card h3 {
+        color: var(--accent-1);
+        font-size: 1.5rem;
+      }
+
+      .company {
+        color: var(--accent-2);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .date {
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
+
+      .experience-card ul {
+        margin-left: 1.5rem;
+        color: var(--text-secondary);
+      }
+
+      .experience-card li {
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+      }
+
+      /* Achievements Section */
+      #achievements {
+        background: var(--bg-tertiary);
+      }
+
+      .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .achievement-card {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px var(--shadow);
+        text-align: center;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .achievement-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 15px 40px var(--shadow-strong);
+      }
+
+      .achievement-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .achievement-card h3 {
+        color: var(--accent-1);
+        margin-bottom: 1rem;
+      }
+
+      .achievement-card p {
+        color: var(--text-secondary);
+      }
+
+      /* Gallery Section */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .gallery-item {
+        position: relative;
+        height: 300px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px var(--shadow);
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+
+      .gallery-item:hover {
+        transform: scale(1.05) rotateZ(2deg);
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .gallery-placeholder {
+        width: 100%;
+        height: 100%;
+        background: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        padding: 2rem 1.5rem 1.5rem;
+        transform: translateY(100%);
+        transition: transform 0.3s;
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+      }
+
+      .gallery-overlay h3 {
+        color: white;
+        margin-bottom: 0.5rem;
+      }
+
+      .gallery-overlay p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+      }
+
+      /* Contact Section */
+      #contact {
+        background: var(--bg-primary);
+        color: white;
+      }
+
+      #contact .section-title {
+        -webkit-text-fill-color: white;
+      }
+
+      #contact .section-title::after {
+        background: white;
+      }
+
+      .contact-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .contact-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .contact-card:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-10px);
+      }
+
+      .contact-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .contact-card h3 {
+        margin-bottom: 0.5rem;
+      }
+
+      .contact-card a {
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.3s;
+      }
+
+      .contact-card a:hover {
+        opacity: 0.8;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .social-links a {
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        transition: all 0.3s;
+      }
+
+      .social-links a:hover {
+        color: var(--accent-1);
+        transform: translateY(-5px);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero-container {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero-content h2 {
+          font-size: 1.5rem;
+        }
+
+        .image-placeholder {
+          margin: 0 auto;
+          max-width: 300px;
+          height: 400px;
+        }
+
+        nav ul {
+          display: none;
+        }
+
+        .nav-links {
+          gap: 1rem;
+        }
+
+        .stats-row {
+          justify-content: center;
+        }
+
+        .cta-buttons {
+          justify-content: center;
+        }
+
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-location {
+          justify-content: center;
+        }
+      }
+
+      /* Lazy Loading Animation */
+      img[data-src] {
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+
+      img.loaded {
+        opacity: 1;
+      }
+
+      /* Scroll Progress Bar */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: var(--bg-primary);
+        width: 0%;
+        z-index: 9999;
+        transition: width 0.1s;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">Rehmat</div>
+      <div class="nav-links">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#certifications">Certifications</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-container">
+        <div class="hero-image">
+          <div class="image-placeholder">
+            <!-- Replace with your actual photo -->
+            <img src="assets/image1.png" alt="Rehmat" />
+          </div>
+        </div>
+        <div class="hero-content">
+          <h1>Rehmat</h1>
+          <h2>Technical Trainer & Mentor</h2>
+          <p>
+            Empowering 2000+ learners through hands-on training in DSA, Full
+            Stack Development, Cloud Computing, and AI/ML. Transforming complex
+            technical concepts into practical skills.
+          </p>
+
+          <div class="stats-row">
+            <div class="stat-box">
+              <span class="stat-number">5+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">2000+</span>
+              <span class="stat-label">Students Trained</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">10+</span>
+              <span class="stat-label">Certifications</span>
+            </div>
+          </div>
+
+          <div class="cta-buttons">
+            <a href="#contact" class="cta-button">Get In Touch</a>
+            <a href="#experience" class="cta-button secondary"
+              >View Experience</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2 class="section-title">Technical Expertise</h2>
+      <div class="skills-container">
+        <div class="skills-category">
+          <h3 class="category-title">💻 Core Competencies</h3>
+          <div class="skills-grid">
+            <div class="skill-card">
+              <h3>Data Structures & Algorithms</h3>
+              <p>
+                Expert training in problem-solving, competitive programming, and
+                technical interview preparation
+              </p>
+            </div>
+            <div class="skill-card">
+              <h3>Full Stack Development</h3>
+              <p>
+                Complete web development training from frontend to backend
+                technologies
+              </p>
+            </div>
+            <div class="skill-card">
+              <h3>Cloud Computing</h3>
+              <p>
+                AWS, Azure, and Google Cloud Platform training and
+                implementation
+              </p>
+            </div>
+            <div class="skill-card">
+              <h3>AI & Machine Learning</h3>
+              <p>
+                Hands-on training in ML models, deep learning, and practical AI
+                applications
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3 class="category-title">🔧 Programming Languages</h3>
+          <div class="skills-grid">
+            <div class="skill-card">
+              <h3>Python</h3>
+              <p>
+                Primary language for AI/ML, scripting, and backend development
+              </p>
+            </div>
+            <div class="skill-card">
+              <h3>Java</h3>
+              <p>Enterprise applications and Android development</p>
+            </div>
+            <div class="skill-card">
+              <h3>C++</h3>
+              <p>System programming and competitive coding</p>
+            </div>
+            <div class="skill-card">
+              <h3>JavaScript</h3>
+              <p>Modern web development and full-stack applications</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3 class="category-title">🚀 Frameworks & Tools</h3>
+          <div class="skills-grid">
+            <div class="skill-card">
+              <h3>React & Node.js</h3>
+              <p>Modern JavaScript stack for full-stack development</p>
+            </div>
+            <div class="skill-card">
+              <h3>Django & Flask</h3>
+              <p>Python web frameworks for scalable applications</p>
+            </div>
+            <div class="skill-card">
+              <h3>Docker & Kubernetes</h3>
+              <p>Containerization and orchestration for DevOps</p>
+            </div>
+            <div class="skill-card">
+              <h3>TensorFlow & scikit-learn</h3>
+              <p>Machine learning and deep learning frameworks</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications">
+      <h2 class="section-title">Professional Certifications</h2>
+      <div class="cert-grid">
+        <div class="cert-card">
+          <h3>AWS Certified Solutions Architect</h3>
+          <p class="cert-issuer">Amazon Web Services - Associate Level</p>
+        </div>
+        <div class="cert-card">
+          <h3>Microsoft Azure Developer</h3>
+          <p class="cert-issuer">Microsoft Certified - Associate</p>
+        </div>
+        <div class="cert-card">
+          <h3>Google Cloud Associate Engineer</h3>
+          <p class="cert-issuer">Google Cloud Platform</p>
+        </div>
+        <div class="cert-card">
+          <h3>TensorFlow Developer</h3>
+          <p class="cert-issuer">TensorFlow Certificate Program</p>
+        </div>
+        <div class="cert-card">
+          <h3>Certified Kubernetes Administrator</h3>
+          <p class="cert-issuer">Cloud Native Computing Foundation</p>
+        </div>
+        <div class="cert-card">
+          <h3>Machine Learning Specialization</h3>
+          <p class="cert-issuer">Coursera - Andrew Ng</p>
+        </div>
+        <div class="cert-card">
+          <h3>AI Foundations</h3>
+          <p class="cert-issuer">EDX Certificate Program</p>
+        </div>
+        <div class="cert-card">
+          <h3>Scrum Master Certificate</h3>
+          <p class="cert-issuer">Agile Project Management</p>
+        </div>
+        <div class="cert-card">
+          <h3>Power BI Data Analyst</h3>
+          <p class="cert-issuer">Microsoft Certified - Associate</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <div class="experience-card">
+        <div class="experience-header">
+          <div>
+            <h3>Technical Trainer</h3>
+            <p class="company">RACE, Gurgaon</p>
+          </div>
+          <div class="date">April 2020 - Present</div>
+        </div>
+        <ul>
+          <li>
+            Deliver comprehensive training in Data Structures & Algorithms, Full
+            Stack Development, Cloud Computing (AWS, Azure, Google Cloud), and
+            AI/ML to students and working professionals
+          </li>
+          <li>
+            Develop and maintain structured curricula, real-world assignments,
+            and interactive hands-on labs tailored to industry requirements
+          </li>
+          <li>
+            Mentor learners on industry projects and provide extensive technical
+            interview preparation and career guidance
+          </li>
+          <li>
+            Host engaging workshops, webinars, and hackathons focused on
+            upskilling and accelerating career growth
+          </li>
+          <li>
+            Consistently received high learner satisfaction ratings and
+            contributed to successful placements in top companies
+          </li>
+        </ul>
+      </div>
+
+      <div class="experience-card">
+        <div class="experience-header">
+          <div>
+            <h3>B.E. in Computer Science</h3>
+            <p class="company">Chitkara University, Punjab</p>
+          </div>
+          <div class="date">Graduated: 2020</div>
+        </div>
+        <p style="color: var(--text-secondary); margin-top: 1rem">
+          Strong foundation in computer science fundamentals, software
+          engineering, and emerging technologies
+        </p>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+      <h2 class="section-title">Key Achievements</h2>
+      <div class="achievements-grid">
+        <div class="achievement-card">
+          <span class="achievement-icon">👨‍🎓</span>
+          <h3>2000+ Trained</h3>
+          <p>
+            Successfully trained over 2000 students and professionals in
+            advanced technical domains
+          </p>
+        </div>
+        <div class="achievement-card">
+          <span class="achievement-icon">🚀</span>
+          <h3>AI/ML Labs</h3>
+          <p>
+            Designed and launched comprehensive hands-on AI/ML labs and cloud
+            computing bootcamps
+          </p>
+        </div>
+        <div class="achievement-card">
+          <span class="achievement-icon">🏆</span>
+          <h3>Hackathons Organized</h3>
+          <p>
+            Successfully organized regional hackathons and technical webinars
+          </p>
+        </div>
+        <div class="achievement-card">
+          <span class="achievement-icon">💡</span>
+          <h3>Innovation Recognition</h3>
+          <p>
+            Recognized for innovation in technical curriculum design and
+            mentorship excellence
+          </p>
+        </div>
+        <div class="achievement-card">
+          <span class="achievement-icon">☁️</span>
+          <h3>Cloud Migrations</h3>
+          <p>
+            Migrated legacy applications to cloud infrastructure for enterprise
+            clients
+          </p>
+        </div>
+        <div class="achievement-card">
+          <span class="achievement-icon">🤖</span>
+          <h3>ML Deployments</h3>
+          <p>
+            Developed and deployed scalable machine learning models for business
+            analytics
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+      <h2 class="section-title">Training Gallery</h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <img data-src="assets/gn.jpeg" alt="Workshop 1" />
+          </div>
+          <div class="gallery-overlay">
+            <h3>Data Analytics Workshop</h3>
+            <p>Greater Noida</p>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <img data-src="assets/pr1.jpeg" alt="Workshop 2" />
+          </div>
+          <div class="gallery-overlay">
+            <h3>DSA Training</h3>
+            <p>Kakinada</p>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <img data-src="assets/pune.jpeg" alt="Workshop 3" />
+          </div>
+          <div class="gallery-overlay">
+            <h3>Machine Learning and Algorithms</h3>
+            <p>Pune</p>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <img data-src="assets/pune2.jpeg" alt="Workshop 4" />
+          </div>
+          <div class="gallery-overlay">
+            <h3>Artificial Intelligence and Applications with HuggingFace</h3>
+            <p>Pune</p>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <img data-src="assets/da.jpeg" alt="Workshop 5" />
+          </div>
+          <div class="gallery-overlay">
+            <h3>Buisness Analytics</h3>
+            <p>Ghaziabad</p>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <img data-src="assets/ballari.jpeg" alt="Workshop 6" />
+          </div>
+          <div class="gallery-overlay">
+            <h3>DSA with Java</h3>
+            <p>Ballari</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-container">
+        <div class="contact-card">
+          <span class="contact-icon">📧</span>
+          <h3>Email</h3>
+          <a href="mailto:rehmattrains@gmail.com">rehmattrains@gmail.com</a>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon">📱</span>
+          <h3>Phone</h3>
+          <a href="tel:+919253657749">+91 9253657749</a>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon">📍</span>
+          <h3>Location</h3>
+          <p>Hisar, Haryana, India</p>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon">💼</span>
+          <h3>Organization</h3>
+          <p>RACE, Gurgaon</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="social-links">
+          <a href="#" title="LinkedIn">🔗</a>
+          <a href="#" title="GitHub">💻</a>
+          <a href="#" title="Twitter">🐦</a>
+        </div>
+        <p>&copy; 2024 Rehmat - Technical Trainer. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; color: var(--text-secondary)">
+          Member: ACM & IEEE Computer Society | Languages: English, Hindi
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Theme Toggle
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        const icon = document.getElementById("theme-icon");
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        icon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // Load saved theme
+      window.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        const icon = document.getElementById("theme-icon");
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        icon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      });
+
+      // Scroll Progress Bar
+      window.addEventListener("scroll", () => {
+        const windowHeight =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (window.scrollY / windowHeight) * 100;
+        document.querySelector(".progress-bar").style.width = scrolled + "%";
+      });
+
+      // Intersection Observer for lazy loading
+      const lazyImages = document.querySelectorAll("img[data-src]");
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.add("loaded");
+            observer.unobserve(img);
+          }
+        });
+      });
+
+      lazyImages.forEach((img) => imageObserver.observe(img));
+
+      // Intersection Observer for section animations
+      const sections = document.querySelectorAll("section");
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      sections.forEach((section) => sectionObserver.observe(section));
+
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      // Interactive skill cards - add pulse effect on click
+      document
+        .querySelectorAll(".skill-card, .cert-card, .achievement-card")
+        .forEach((card) => {
+          card.addEventListener("click", function () {
+            this.style.animation = "pulse 0.5s";
+            setTimeout(() => {
+              this.style.animation = "";
+            }, 500);
+          });
+        });
+
+      // Add pulse animation
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Parallax effect for hero section
+      window.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector(".hero-content");
+        const heroImage = document.querySelector(".hero-image");
+
+        if (hero && scrolled < window.innerHeight) {
+          hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+          if (heroImage) {
+            heroImage.style.transform = `translateY(${scrolled * 0.2}px)`;
+          }
+        }
+      });
+
+      // Counter animation for stats
+      function animateCounter(element, target, duration = 2000) {
+        let current = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            element.textContent = target + "+";
+            clearInterval(timer);
+          } else {
+            element.textContent = Math.floor(current) + "+";
+          }
+        }, 16);
+      }
+
+      // Trigger counter animation when stats come into view
+      const statsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const statNumbers = entry.target.querySelectorAll(".stat-number");
+              statNumbers.forEach((stat, index) => {
+                const targets = [5, 2000, 10];
+                setTimeout(() => {
+                  animateCounter(stat, targets[index]);
+                }, index * 200);
+              });
+              statsObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      const statsRow = document.querySelector(".stats-row");
+      if (statsRow) statsObserver.observe(statsRow);
+    </script>
+  </body>
+</html>
